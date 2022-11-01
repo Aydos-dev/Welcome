@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post List</title>
+</head>
+<body>
+  {% block content %}
+    {% for post in post_list %}
+        <ul>
+            <li>
+                <header>
+                    <h1><a href="{% url 'post_detail' post.pk %}">{{post.title}} </a></h1>
+                </header>
+            </li>
+            <li>
+                {{post.body}}
+            </li>
+            
+            {% if post.photo %}
+            <li><img src="{{ post.photo.url }}" alt="{{ article.title }}"> </li>
+            {% endif %}
+            <li>{{post.date}}</li>
+            <li>{{post.author}}</li>
+            <li><a href="{% url 'post_edit' post.pk %}">Edit</a> |
+                <a href="{% url "post_delete" post.pk %}">Delete</a></li>
+     {% for comment in post.comment_set.all %}
+          <p>
+              <span class="font-weight-bold">
+              {{ comment.author }} &middot;
+              </span>
+              {{ comment}}
+          </p>
+      {% endfor %}
+        </ul>
+     {% endfor %}
+  {% endblock content %}
+</body>
+</html>

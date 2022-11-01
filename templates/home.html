@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock title %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+
+{% block content %}
+    {% if user.is_authenticated %}
+      <p>Hi, {{ user.username }}! You are {{ user.age }} years old <br>You are from {{ user.city }}</p>
+      <p><a href="{% url 'logout' %}">Log Out</a></p>
+      <p><a href="{% url 'post_new' %}">+New</a></p>
+      <p><a href="{% url 'post_list' %}">All posts</a></p>
+    {% else %}
+      <p><a href="{% url 'login' %}">Login</a> |
+      <a href="{% url 'signup' %}">SignUp</a> </p>
+    {% endif %}
+{% endblock content %}
+
+</body>
+</html>

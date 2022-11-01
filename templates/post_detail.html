@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %} Edit post {% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h2>{{ post.title }}</h2>
+  <p>{{ post.body }}</p>
+  <p> <img src="{{ post.photo.url }}" alt="{{ post.title}}"></p>
+  <p> by {{ post.author}} | published in {{ post.date }}</p>
+
+  <hr>
+  <h4>Comments</h4>
+  {% for comment in post.comment_set.all %}
+    <p>{{ comment.author }} &middot {{ comment }}</p>
+  {% endfor %}
+    <hr>
+
+  <h4>Add a comment </h4>
+    <form method="post">
+      {% csrf_token %}
+      {{ form | crispy }}
+      <button type="submit" class="btn btn-success ml-2">Save</button>
+    </form>
+
+  <p><a href="{% url 'post_edit' post.pk %}">Edit</a> | <a href="{% url 'post_delete' post.pk %}">Delete</a></p>
+  <p><a href="{% url 'post_list' %}">All posts</a></p>
+
+{% endblock content %}
